@@ -2,35 +2,48 @@
 import { Button, Card, Grid, MultiSelectBox, MultiSelectBoxItem, SelectBox, SelectBoxItem, TextInput, Title, Text } from '@tremor/react'
 import React, { useState } from 'react'
 
+interface IUser {
+  login: string
+}
+
+interface IUserRepo {
+  name: string,
+  id: number,
+  languages_url: string
+}
+
 export function Filter() {
-  const [userName, setUserName] = useState('')
-  const [userRepos, setUserRepos] = useState([])
+  const [userName, setUserName] = useState<string>('')
+  const [userRepos, setUserRepos] = useState<IUserRepo[]>([])
+  const [technologies, setTechnologies] = useState<string[]>([])
 
-  const searchUser = () => {
-    let user = ''
-    fetch(`https://api.github.com/users/${userName}`)
-      .then(response => response.json())
-      .then(data => {
-        const { login } = data
-        fetch(`https://api.github.com/users/${login}/repos`)
-          .then(response => response.json())
-          .then(data => {
-            const dataRepo = data.map(repo => {
-              const { name, languages_url, id } = repo
-              return {
-                id,
-                name,
-                languages_url
-              }
-            })
+  const searchUser = async () => {
+    setUserRepos([])
+    setTechnologies([])
 
-            setUserRepos(dataRepo)
-          })
-          .catch(error => console.error(error))
-      })
-      .catch(error => console.error(error))
+    const getDataUser = await fetch(`https://api.github.com/users/${userName}`)
+    const dataUser = await getDataUser.json()
+    const { login } = dataUser
 
+    const getRepoUser = await fetch(`https://api.github.com/users/${login}/repos`)
+    const dataRepo = await getRepoUser.json()
 
+    const getInfoRepo = dataRepo.map(({ name, id, languages_url }: IUserRepo) => {
+      return { name, id, languages_url }
+    })
+
+    setUserRepos(getInfoRepo)
+  }
+
+  const getNameRepo = async (urlLanguages: string) => {
+    const getLanguages = await fetch(urlLanguages)
+    const dataLanguages = await getLanguages.json()
+
+    setTechnologies(Object.keys(dataLanguages))
+  }
+
+  const getValuesTechnologies = (e: string[]) => {
+    console.log(e)
   }
 
   return (
@@ -49,21 +62,15 @@ export function Filter() {
           <Text>Nombre repositorio</Text>
           <SelectBox
             defaultValue="1"
+            onValueChange={(e) => getNameRepo(e)}
           >
-
-            {
-              userRepos.map(repo => (
-                <SelectBoxItem value={repo.id} text={repo.name} key={repo.id} />
-              ))
-            }
+            {userRepos.map(repo => <SelectBoxItem value={repo.languages_url} text={repo.name} key={repo.id} />)}
           </SelectBox>
         </div>
         <div>
           <Text>Tecnología</Text>
-          <MultiSelectBox>
-            <MultiSelectBoxItem value="1" text="Option 1" />
-            <MultiSelectBoxItem value="2" text="Option 2" />
-            <MultiSelectBoxItem value="3" text="Option 3" />
+          <MultiSelectBox onValueChange={(e) => getValuesTechnologies(e)}>
+            {technologies.map(technology => <MultiSelectBoxItem value={technology} text={technology} key={technology} />)}
           </MultiSelectBox>
         </div>
       </Grid>
