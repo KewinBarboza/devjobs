@@ -62,14 +62,14 @@ export function Filter() {
           <Text>Nombre repositorio</Text>
           <SelectBox
             defaultValue="1"
-            onValueChange={(e) => getNameRepo(e)}
+            onValueChange={(value) => getNameRepo(value)}
           >
             {userRepos.map(repo => <SelectBoxItem value={repo.languages_url} text={repo.name} key={repo.id} />)}
           </SelectBox>
         </div>
         <div>
           <Text>Tecnología</Text>
-          <MultiSelectBox onValueChange={(e) => getValuesTechnologies(e)}>
+          <MultiSelectBox onValueChange={(values) => getValuesTechnologies(values)}>
             {technologies.map(technology => <MultiSelectBoxItem value={technology} text={technology} key={technology} />)}
           </MultiSelectBox>
         </div>
