@@ -53,18 +53,13 @@ export function Filter() {
           <Text>Nombre de usuario</Text>
           <div className="flex gap-2">
             <TextInput placeholder="buscar usuario" onChange={(e) => setUserName(e.target.value)} value={userName} />
-            <Button size="xs" onClick={() => searchUser()}>
-              Buscar
-            </Button>
+            <Button size="xs" onClick={() => searchUser()}> Buscar </Button>
           </div>
         </div>
         <div>
           <Text>Nombre repositorio</Text>
-          <SelectBox
-            defaultValue="1"
-            onValueChange={(value) => getNameRepo(value)}
-          >
-            {userRepos.map(repo => <SelectBoxItem value={repo.languages_url} text={repo.name} key={repo.id} />)}
+          <SelectBox onValueChange={(value) => getNameRepo(value)} >
+            {userRepos.map(({ id, languages_url, name }: IUserRepo) => <SelectBoxItem value={languages_url} text={name} key={id} />)}
           </SelectBox>
         </div>
         <div>
