@@ -1,8 +1,8 @@
-import { Card, Col, Dropdown, DropdownItem, Grid, Metric, Subtitle, Text, Title, TextInput, SelectBox, SelectBoxItem, MultiSelectBox, MultiSelectBoxItem, Button } from "@tremor/react";
+import { Card, Grid, Subtitle, Text, Title } from "@tremor/react";
 
 
 import Image from 'next/image';
-import { Filter } from "./components/Filter";
+import { Filter } from "../components/Filter";
 
 async function getData() {
   const res = await fetch('https://api.infojobs.net/api/7/offer?subcategory=programacion&subcategory=sistemas&subcategory=diseno-web', {
@@ -11,7 +11,6 @@ async function getData() {
       Authorization: `Basic Y2Q3Yjg3ZTViMWQ0NDVlMjhlMTY3ZWMyMTJlZDE5NmE6REZmazlHaEEvemw3U3NQSUVObkFyeGhtR1h4bmphdFhGSzBkazU1MHdWWThWRUcrNTI=`
     }
   })
-
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');
