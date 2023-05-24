@@ -21,7 +21,7 @@ export default function RootLayout({
         <nav className='border-b-2 px-4 py-2 '>
           <a href="/" className='font-bold' >DevJobs</a>
         </nav>
-        <header className='mx-48'>
+        <header className='mx-48 px-24 mt-10'>
           <Filter />
         </header>
         {children}

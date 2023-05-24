@@ -1,5 +1,6 @@
 "use client"
 import { Button, Card, Grid, MultiSelectBox, MultiSelectBoxItem, SelectBox, SelectBoxItem, TextInput, Title, Text } from '@tremor/react'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 interface IUser {
@@ -16,6 +17,8 @@ export function Filter() {
   const [userName, setUserName] = useState<string>('')
   const [userRepos, setUserRepos] = useState<IUserRepo[]>([])
   const [technologies, setTechnologies] = useState<string[]>([])
+
+  const { push } = useRouter()
 
   const searchUser = async () => {
     setUserRepos([])
@@ -43,16 +46,16 @@ export function Filter() {
   }
 
   const getValuesTechnologies = (e: string[]) => {
-    console.log(e)
+    push(`/filter?q=${e[0]}`)
   }
 
   return (
     <><Title className="mb-2">Filtrar por repositorio de github</Title><Card>
-      <Grid numCols={1} numColsSm={2} numColsLg={4} className="gap-8">
+      <Grid numCols={1} numColsSm={2} numColsLg={3} className="gap-5">
         <div>
           <Text>Nombre de usuario</Text>
           <div className="flex gap-2">
-            <TextInput placeholder="buscar usuario" onChange={(e) => setUserName(e.target.value)} value={userName} />
+            <TextInput placeholder="buscar usuario" onChange={(e) => setUserName(e.target.value)} value={userName} onKeyDown={(e) => e.key === "Enter" ? searchUser() : null} />
             <Button size="xs" onClick={() => searchUser()}> Buscar </Button>
           </div>
         </div>
@@ -67,9 +70,6 @@ export function Filter() {
           <MultiSelectBox onValueChange={(values) => getValuesTechnologies(values)}>
             {technologies.map(technology => <MultiSelectBoxItem value={technology} text={technology} key={technology} />)}
           </MultiSelectBox>
-        </div>
-        <div className='flex items-end'>
-          <Button size="xs"> Filtrar ofertas </Button>
         </div>
       </Grid>
     </Card></>

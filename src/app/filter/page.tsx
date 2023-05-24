@@ -1,11 +1,26 @@
 "use client"
-import { Filter } from "../../components/Filter";
-
+import ListJobs from '@/components/ListJobs'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 export default function FilterPage() {
-  // const { items } = await getData();
+  const search = useSearchParams()
+  const [jobs, setJobs] = useState([])
+
+  const searchQuery = search ? search.get('q') : null
+  const encodeSearchQuery = encodeURI(searchQuery || '')
+
+  useEffect(() => {
+    fetch(`/api/jobs?q=${encodeSearchQuery}`)
+      .then((data) => data.json())
+      .then((jobs) => {
+        setJobs(jobs.items)
+      })
+
+  }, [encodeSearchQuery])
+
   return (
-    <main className="min-h-screen p-24 mx-48">
-      <h1>Filter</h1>
+    <main className="px-24 mx-48">
+      <ListJobs jobs={jobs} />
     </main>
   )
 }
