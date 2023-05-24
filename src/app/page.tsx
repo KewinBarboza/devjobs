@@ -1,8 +1,5 @@
 import { Card, Grid, Subtitle, Text, Title } from "@tremor/react";
-
-
 import Image from 'next/image';
-import { Filter } from "../components/Filter";
 
 async function getData() {
   const res = await fetch('https://api.infojobs.net/api/7/offer?subcategory=programacion&subcategory=sistemas&subcategory=diseno-web', {
@@ -23,8 +20,6 @@ export default async function Home() {
   const { items } = await getData();
   return (
     <main className="min-h-screen p-24 mx-48">
-      <Filter />
-
       <section className="mt-10">
         <Title className="mb-2">Trabajos</Title>
         <Grid numCols={1} numColsSm={2} numColsLg={3} className="gap-8">

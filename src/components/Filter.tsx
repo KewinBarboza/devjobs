@@ -48,7 +48,7 @@ export function Filter() {
 
   return (
     <><Title className="mb-2">Filtrar por repositorio de github</Title><Card>
-      <Grid numCols={1} numColsSm={2} numColsLg={3} className="gap-8">
+      <Grid numCols={1} numColsSm={2} numColsLg={4} className="gap-8">
         <div>
           <Text>Nombre de usuario</Text>
           <div className="flex gap-2">
@@ -67,6 +67,9 @@ export function Filter() {
           <MultiSelectBox onValueChange={(values) => getValuesTechnologies(values)}>
             {technologies.map(technology => <MultiSelectBoxItem value={technology} text={technology} key={technology} />)}
           </MultiSelectBox>
+        </div>
+        <div className='flex items-end'>
+          <Button size="xs"> Filtrar ofertas </Button>
         </div>
       </Grid>
     </Card></>

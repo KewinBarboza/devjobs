@@ -1,3 +1,4 @@
+import { Filter } from '@/components/Filter'
 import './globals.css'
 import { Inter } from 'next/font/google'
 
@@ -20,7 +21,11 @@ export default function RootLayout({
         <nav className='border-b-2 px-4 py-2 '>
           <a href="/" className='font-bold' >DevJobs</a>
         </nav>
-        {children}</body>
+        <header className='mx-48'>
+          <Filter />
+        </header>
+        {children}
+      </body>
     </html>
   )
 }
