@@ -1,9 +1,7 @@
 import ListJobs from "@/components/ListJobs";
-import { Card, Grid, Subtitle, Text, Title } from "@tremor/react";
-import Image from 'next/image';
 
 async function getData() {
-  const res = await fetch('https://api.infojobs.net/api/7/offer?subcategory=programacion&subcategory=sistemas&subcategory=diseno-web', {
+  const res = await fetch('https://api.infojobs.net/api/7/offer?subcategory=programacion&subcategory=sistemas&subcategory=diseno-web&maxResults=21', {
     headers: {
       contentType: 'application/json',
       Authorization: `Basic Y2Q3Yjg3ZTViMWQ0NDVlMjhlMTY3ZWMyMTJlZDE5NmE6REZmazlHaEEvemw3U3NQSUVObkFyeGhtR1h4bmphdFhGSzBkazU1MHdWWThWRUcrNTI=`

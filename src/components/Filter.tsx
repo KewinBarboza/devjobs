@@ -17,15 +17,29 @@ export function Filter() {
   const [userName, setUserName] = useState<string>('')
   const [userRepos, setUserRepos] = useState<IUserRepo[]>([])
   const [technologies, setTechnologies] = useState<string[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState({ error: false, message: '' })
+  const [isErrorTechnologies, setIsErrorTechnologies] = useState({ error: false, message: '' })
+
 
   const { push } = useRouter()
 
   const searchUser = async () => {
+    if (userName === '') return
+
     setUserRepos([])
     setTechnologies([])
+    setIsLoading(true)
 
     const getDataUser = await fetch(`https://api.github.com/users/${userName}`)
     const dataUser = await getDataUser.json()
+
+    if (dataUser.message === 'Not Found') {
+      setIsError({ error: true, message: 'Usuario no encontrado' })
+      setIsLoading(false)
+      return
+    }
+
     const { login } = dataUser
 
     const getRepoUser = await fetch(`https://api.github.com/users/${login}/repos`)
@@ -36,13 +50,20 @@ export function Filter() {
     })
 
     setUserRepos(getInfoRepo)
+    setIsLoading(false)
   }
 
   const getNameRepo = async (urlLanguages: string) => {
     const getLanguages = await fetch(urlLanguages)
     const dataLanguages = await getLanguages.json()
+    const languages = Object.keys(dataLanguages)
 
-    setTechnologies(Object.keys(dataLanguages))
+    if (languages.length === 0) {
+      setIsErrorTechnologies({ error: true, message: 'No hay tecnologías disponibles' })
+      return
+    }
+
+    setTechnologies(languages)
   }
 
   const getValuesTechnologies = (e: string[]) => {
@@ -52,24 +73,25 @@ export function Filter() {
   return (
     <><Title className="mb-2">Filtrar por repositorio de github</Title><Card>
       <Grid numCols={1} numColsSm={2} numColsLg={3} className="gap-5">
-        <div>
+        <div className="relative h-full">
           <Text>Nombre de usuario</Text>
-          <div className="flex gap-2">
-            <TextInput placeholder="buscar usuario" onChange={(e) => setUserName(e.target.value)} value={userName} onKeyDown={(e) => e.key === "Enter" ? searchUser() : null} />
-            <Button size="xs" onClick={() => searchUser()}> Buscar </Button>
-          </div>
+          <TextInput className='pe-14' placeholder="Escribe tu nombre de usuario" error={isError.error} errorMessage={isError.message} onChange={(e) => setUserName(e.target.value)} value={userName} onKeyDown={(e) => e.key === "Enter" ? searchUser() : null} />
+          <Button className='absolute top-[21.5px] right-[2px]' size="xs" loading={isLoading} onClick={() => searchUser()}> Buscar </Button>
         </div>
         <div>
           <Text>Nombre repositorio</Text>
-          <SelectBox onValueChange={(value) => getNameRepo(value)} >
+          <SelectBox placeholder='Seleccionar repositorio' onValueChange={(value) => getNameRepo(value)} disabled={userRepos.length === 0 ? true : false} >
             {userRepos.map(({ id, languages_url, name }: IUserRepo) => <SelectBoxItem value={languages_url} text={name} key={id} />)}
           </SelectBox>
         </div>
         <div>
           <Text>Tecnología</Text>
-          <MultiSelectBox onValueChange={(values) => getValuesTechnologies(values)}>
+          <MultiSelectBox placeholder='Seleccionar tecnología' onValueChange={(values) => getValuesTechnologies(values)} disabled={technologies.length === 0 ? true : false}>
             {technologies.map(technology => <MultiSelectBoxItem value={technology} text={technology} key={technology} />)}
           </MultiSelectBox>
+          {
+            isErrorTechnologies.error && <Text className='text-red-500'>{isErrorTechnologies.message}</Text>
+          }
         </div>
       </Grid>
     </Card></>
