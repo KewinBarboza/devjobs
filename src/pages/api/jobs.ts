@@ -3,6 +3,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { query } = req
 
+  const arrayQuery = query.q?.split('%')
+
+
   fetch('https://api.infojobs.net/api/7/offer?subcategory=programacion&subcategory=sistemas&subcategory=diseno-web', {
     headers: {
       contentType: 'application/json',
@@ -12,7 +15,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     .then((data) => data.json())
     .then((jobs) => {
       const filter = jobs.items.map(job => {
-        if (job.title.includes(query?.q) || job.requirementMin.includes(query?.q)) {
+        let requirementMin = arrayQuery.some((elemento) => job.requirementMin.includes(elemento))
+        let title = arrayQuery.some((elemento) => job.title.includes(elemento))
+
+        if (title || requirementMin) {
           return {
             ...job
           }

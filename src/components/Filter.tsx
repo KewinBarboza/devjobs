@@ -46,7 +46,7 @@ export function Filter() {
   }
 
   const getValuesTechnologies = (e: string[]) => {
-    push(`/filter?q=${e[0]}`)
+    push(`/filter?q=${e.join('%')}`)
   }
 
   return (
