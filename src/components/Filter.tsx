@@ -71,29 +71,34 @@ export function Filter() {
   }
 
   return (
-    <><Title className="mb-2">Filtrar por repositorio de github</Title><Card>
-      <Grid numCols={1} numColsSm={2} numColsLg={3} className="gap-5">
-        <div className="relative h-full">
-          <Text>Nombre de usuario</Text>
-          <TextInput className='pe-14' placeholder="Escribe tu nombre de usuario" error={isError.error} errorMessage={isError.message} onChange={(e) => setUserName(e.target.value)} value={userName} onKeyDown={(e) => e.key === "Enter" ? searchUser() : null} />
-          <Button className='absolute top-[21.5px] right-[2px]' size="xs" loading={isLoading} onClick={() => searchUser()}> Buscar </Button>
-        </div>
-        <div>
-          <Text>Nombre repositorio</Text>
-          <SelectBox placeholder='Seleccionar repositorio' onValueChange={(value) => getNameRepo(value)} disabled={userRepos.length === 0 ? true : false} >
-            {userRepos.map(({ id, languages_url, name }: IUserRepo) => <SelectBoxItem value={languages_url} text={name} key={id} />)}
-          </SelectBox>
-        </div>
-        <div>
-          <Text>Tecnología</Text>
-          <MultiSelectBox placeholder='Seleccionar tecnología' onValueChange={(values) => getValuesTechnologies(values)} disabled={technologies.length === 0 ? true : false}>
-            {technologies.map(technology => <MultiSelectBoxItem value={technology} text={technology} key={technology} />)}
-          </MultiSelectBox>
-          {
-            isErrorTechnologies.error && <Text className='text-red-500'>{isErrorTechnologies.message}</Text>
-          }
-        </div>
-      </Grid>
-    </Card></>
+    <>
+      <Title className="mb-2 dark:text-white">Filtrar por repositorio de github</Title>
+      <div className=''>
+        <Card className='m-0 bg-opacity-90 border-0 rounded-lg shadow-slate-400 dark:bg-slate-800 dark:border-slate-700 dark:shadow-slate-800 dark:ring-slate-700 shadow-md'>
+          <Grid numCols={1} numColsSm={2} numColsLg={3} className="gap-5">
+            <div className="relative h-full">
+              <Text className='dark:text-white' >Nombre de usuario</Text>
+              <TextInput className='pe-14' placeholder="Escribe tu nombre de usuario" error={isError.error} errorMessage={isError.message} onChange={(e) => setUserName(e.target.value)} value={userName} onKeyDown={(e) => e.key === "Enter" ? searchUser() : null} />
+              <Button className='absolute top-[21.5px] right-[2px] bg-[#1972A3] border-[#1972A3] hover:bg-[#144d6b]' size="xs" loading={isLoading} onClick={() => searchUser()}> Buscar </Button>
+            </div>
+            <div>
+              <Text className='dark:text-white' >Nombre repositorio</Text>
+              <SelectBox placeholder='Seleccionar repositorio' onValueChange={(value) => getNameRepo(value)} disabled={userRepos.length === 0 ? true : false} >
+                {userRepos.map(({ id, languages_url, name }: IUserRepo) => <SelectBoxItem value={languages_url} text={name} key={id} />)}
+              </SelectBox>
+            </div>
+            <div>
+              <Text className='dark:text-white ' >Tecnología</Text>
+              <MultiSelectBox placeholder='Seleccionar tecnología' onValueChange={(values) => getValuesTechnologies(values)} disabled={technologies.length === 0 ? true : false}>
+                {technologies.map(technology => <MultiSelectBoxItem value={technology} text={technology} key={technology} />)}
+              </MultiSelectBox>
+              {
+                isErrorTechnologies.error && <Text className='text-red-500'>{isErrorTechnologies.message}</Text>
+              }
+            </div>
+          </Grid>
+        </Card>
+      </div>
+    </>
   )
 }

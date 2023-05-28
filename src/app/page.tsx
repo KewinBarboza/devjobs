@@ -18,7 +18,7 @@ async function getData() {
 export default async function Home() {
   const { items } = await getData();
   return (
-    <main className="min-h-screen px-24 pb-10 mx-48">
+    <main className="min-h-screen px-10 md:px-24 pb-10 mx-10 md:mx-48">
       <ListJobs jobs={items} />
     </main>
   )
