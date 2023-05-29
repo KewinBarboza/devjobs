@@ -6,8 +6,8 @@ import Link from 'next/link'
 function ListJobs({ jobs }) {
   return (
     <>
-      <section className="mt-10 mb-3">
-        <Title className="mb-2 dark:text-white">Trabajos</Title>
+      <section className="mt-5 mb-3">
+        <Title className="mb-2 dark:text-white">Trabajos disponibles en tecnología</Title>
         <Grid numCols={1} numColsSm={2} numColsLg={3} className="gap-8">
           {
             jobs.map(job => (
