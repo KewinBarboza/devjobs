@@ -129,7 +129,7 @@ export function Filter() {
 
   return (
     <>
-      <section className=''>
+      <section className='mb-2'>
         <Title className="mb-2 dark:text-white">Filtrar por repositorio de github</Title>
         <Card className='m-0 bg-opacity-90 border-0 rounded-lg shadow-slate-400 dark:bg-slate-800 dark:border-slate-700 dark:shadow-slate-800 dark:ring-slate-700 shadow-md'>
           <Grid numCols={1} numColsSm={2} numColsLg={3} className="gap-5">
