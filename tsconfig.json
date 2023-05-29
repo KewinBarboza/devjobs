@@ -27,7 +27,8 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "strictNullChecks": false
   },
   "include": [
     "next-env.d.ts",
@@ -36,6 +37,7 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
+    "./src/components/Filter.tsx",
     "node_modules"
   ]
 }

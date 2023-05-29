@@ -28,7 +28,7 @@ interface IUserRepo {
 }
 
 interface IUserRepoSelected {
-  languages_url?: string,
+  languages_url: string,
   name: string,
   description: string,
   url: string
@@ -91,7 +91,7 @@ export function Filter() {
   const getDataRepo = async (repo: IUserRepoSelected) => {
     setUserSelectedRepo(null)
 
-    const getLanguages = await fetch(repo.languages_url)
+    const getLanguages = await fetch(repo?.languages_url)
     const dataLanguages = await getLanguages.json()
     const languages = Object.keys(dataLanguages)
 
@@ -118,7 +118,7 @@ export function Filter() {
     })
 
     setDataLanguages(maperLanguages)
-    setUserSelectedRepo({ name: repo.name, description: repo.description, url: repo.url })
+    setUserSelectedRepo({ name: repo.name, description: repo.description, url: repo.url, languages_url: '' })
     setTechnologies(languages)
     setIsErrorTechnologies({ error: false, message: '' })
   }
