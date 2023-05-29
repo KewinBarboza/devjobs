@@ -28,16 +28,19 @@ interface IUserRepo {
 }
 
 interface IUserRepoSelected {
-  languages_url?: string | undefined,
+  languages_url?: string,
   name: string,
   description: string,
   url: string
 }
 
 interface ILanguages {
-  name: string;
-  value: unknown;
-  url: string
+  name: string,
+  value: unknown,
+}
+
+interface IRepos {
+  [key: string]: number;
 }
 
 export function Filter() {
@@ -85,7 +88,7 @@ export function Filter() {
     setIsLoading(false)
   }
 
-  const getDataRepo = async (repo: any) => {
+  const getDataRepo = async (repo: IUserRepoSelected) => {
     setUserSelectedRepo(null)
 
     const getLanguages = await fetch(repo.languages_url)
