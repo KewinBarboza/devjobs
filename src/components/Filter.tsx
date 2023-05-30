@@ -61,6 +61,7 @@ export function Filter() {
 
     setUserRepos([])
     setTechnologies([])
+    setDataLanguages([])
     setIsLoading(true)
 
     const getDataUser = await fetch(`https://api.github.com/users/${userName}`)
@@ -160,19 +161,19 @@ export function Filter() {
             <section className='mx-auto mt-5'>
               <Title className="mb-2 dark:text-white">Datos de tu perfil</Title>
               <Grid numCols={1} numColsSm={2} numColsLg={2} className="gap-8">
-                <Card className='flex bg-opacity-90 border-0 rounded-lg shadow-slate-400 dark:bg-slate-800 dark:border-slate-700 dark:shadow-slate-800 dark:ring-slate-700 shadow-md'>
-                  <div className='mr-7'>
-                    <Image src={`${userData?.avatar_url}`} className='rounded-full' alt={`${userData?.login}`} width={64} height={64} />
+                <Card className='md:flex bg-opacity-90 border-0 rounded-lg shadow-slate-400 dark:bg-slate-800 dark:border-slate-700 dark:shadow-slate-800 dark:ring-slate-700 shadow-md'>
+                  <div className='md:mr-7'>
+                    <Image src={`${userData?.avatar_url}`} className='rounded-full mx-auto' alt={`${userData?.login}`} width={64} height={64} />
                   </div>
                   <section className='w-full'>
                     <header className=''>
-                      <div className='flex justify-between items-center'>
+                      <div className='md:flex justify-between items-center'>
                         <div>
-                          <Title className='mb-0 dark:text-white'>{userData?.login}</Title>
+                          <Title className='mb-0 dark:text-white text-center md:text-start'>{userData?.login}</Title>
                         </div>
-                        <Text className='text-[10px] dark:text-slate-400'>{userData?.created_at}</Text>
+                        <Text className='text-[10px] dark:text-slate-400 text-center md:text-start'>{userData?.created_at}</Text>
                       </div>
-                      <Text className='text-sm dark:text-slate-200'>{userData?.bio}</Text>
+                      <Text className='text-sm dark:text-slate-200 text-center md:text-start'>{userData?.bio}</Text>
                     </header>
                     <main className='rounded-md flex justify-between bg-slate-200 my-3 py-2 px-3 dark:bg-slate-700'>
                       <div>

@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export function Navbar() {
   return (
-    <nav className='shadow-sm px-5 py-2 flex justify-between fixed w-full bg-white dark:bg-slate-900 z-10'>
+    <nav className='shadow-sm px-5 py-2 flex justify-between fixed w-full bg-white dark:bg-slate-900 z-10 top-0'>
       <div className=''>
         <a href="/" className='font-bold dark:text-white'>DevJobs</a>
         <a href="http://infojobs.com" target="_blank" rel="noopener noreferrer" className='flex justify-center'>
