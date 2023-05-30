@@ -10,12 +10,20 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   title: 'DevJobs - InfoJobs',
   description: 'Busca tu empleo con infojobs y tu usuario de GitHub',
+
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <html lang="en">
+      <head>
+        <meta property="og:title" content="DevJobs" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="http://devjobs.kewinbarboza.com" />
+        <meta property="og:image" content="https://raw.githubusercontent.com/KewinBarboza/banner-proyectos/master/devjobs.png" />
+        <meta property="og:description" content="Busca tu empleo con infojobs y tu usuario de GitHub" />
+      </head>
       <body className='dark:bg-slate-900 bg-white'>
         <Navbar />
         <header className='px-0 md:pt-24 relative'>
